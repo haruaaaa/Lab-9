@@ -1,4 +1,44 @@
-li {
-    margin-bottom: 10px;
+body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #c7f0ff;
+    border-radius: 5px;
+}
+
+input, button {
+    padding: 8px;
+    margin: 5px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    cursor: pointer;
+    background-color: #66ad7f;
+    color: white;
+    border: none;
     padding: 10px;
+    border-radius: 5px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    border-bottom: 1px solid #dbe0ea;
+    margin-bottom: 5px;
 }

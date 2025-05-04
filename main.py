@@ -9,20 +9,20 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 
-# products = [
-#     {'prod_name': 'sofa',
-#      'price': 12000,
-#      'in_stock': False,
-#      'id': 0},
-#     {'prod_name': 'table',
-#      'price': 6000,
-#      'in_stock': True,
-#      'id': 1},
-#     {'prod_name': 'chair',
-#      'price': 8000,
-#      'in_stock': False,
-#      'id': 2},
-# ]
+products = [
+    {'prod_name': 'sofa',
+     'price': 12000,
+     'in_stock': False,
+     'id': 0},
+    {'prod_name': 'table',
+     'price': 6000,
+     'in_stock': True,
+     'id': 1},
+    {'prod_name': 'chair',
+     'price': 8000,
+     'in_stock': False,
+     'id': 2},
+]
 
 
 class Product(db.Model):
@@ -46,12 +46,12 @@ def modify_product(product_id):
     product = Product.query.get(product_id)
     product.in_stock = request.json['in_stock']
     db.session.commit()
-    # global products
-    # in_stock = request.json['in_stock']
-    # for product in products:
-    #     if product['id'] == product_id:
-    #         product.update({'in_stock': in_stock})
-    # return 'OK'
+    global products
+    in_stock = request.json['in_stock']
+    for product in products:
+        if product['id'] == product_id:
+            product.update({'in_stock': in_stock})
+    return 'OK'
 
 
 @app.route('/add', methods=['POST'])
@@ -61,10 +61,10 @@ def add_product():
     db.session.add(product)
     db.session.commit()
 
-    # id_last = products[-1]['id']
-    # id_new = id_last + 1
-    # data['id'] = id_new
-    # products.append(data)
+    id_last = products[-1]['id']
+    id_new = id_last + 1
+    data['id'] = id_new
+    products.append(data)
     return 'OK'
 
 

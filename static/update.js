@@ -1,22 +1,46 @@
-function updateProd(el) {
-    product_id = el.value
-    fetch('/in_stock/' + product_id, {
-        method: 'patch',
+function addRecord() {
+    const date = document.getElementById('date').value;
+    const steps = document.getElementById('steps').value;
+
+    if (!date || !steps) {
+        alert('Please fill all fields');
+        return;
+    }
+
+    fetch('/add', {
+        method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({'in_stock': el.checked})
+        body: JSON.stringify({
+            date: date,
+            steps: parseInt(steps)
+        })
     })
-    console.log(product_id)
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            
+            const newItem = document.createElement('li');
+            newItem.innerHTML = `<div>${date} - ${steps} steps</div>`;
+            document.getElementById('recordsList').prepend(newItem);
+            
+            
+            document.getElementById('recordForm').reset();
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
-function addProduct() {
-    let prodName = document.getElementById('prod_name').value
-    let price = document.getElementById('price').value
-    fetch('/add', {
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({'prod_name': prodName,
-                             'price': price,
-                             'in_stock': true})
-    })
-//    console.log("Add")
+function clearAll() {
+    if (confirm('Are you sure you want to delete all records?')) {
+        fetch('/clear', {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById('recordsList').innerHTML = '';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 }
